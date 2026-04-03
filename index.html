@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSSUA — Fine Dining Experience</title>
+  <style>
+/* ================================================
+   OSSUA — Fine Dining Restaurant — Global Styles
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --bg:    #0D0B08;
+  --bg2:   #141209;
+  --bg3:   #1A1710;
+  --cream: #F2EDE4;
+  --warm:  #D4A96A;
+  --warm2: #E8C98A;
+  --text:  #9A9080;
+  --white: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--white); overflow-x: hidden; }
+
+/* ---- NAV ---- */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 999;
+  padding: 28px 80px; display: flex; justify-content: space-between; align-items: center;
+  transition: all 0.4s;
+}
+nav.scrolled {
+  background: rgba(13,11,8,0.97); backdrop-filter: blur(20px);
+  padding: 18px 80px; border-bottom: 1px solid rgba(212,169,106,0.1);
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.15em; color: var(--warm); cursor: pointer; }
+.nav-links { display: flex; gap: 44px; list-style: none; }
+.nav-links a { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.65); text-decoration: none; cursor: pointer; transition: color 0.3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--warm); }
+.nav-reserve { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 12px 28px; background: var(--warm); color: var(--bg); font-weight: 600; border: none; cursor: pointer; transition: all 0.3s; font-family: 'DM Sans', sans-serif; }
+.nav-reserve:hover { background: var(--warm2); }
+
+/* ---- SHARED ---- */
+.section-eyebrow { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--warm); display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.eyebrow-line { width: 40px; height: 1px; background: var(--warm); flex-shrink: 0; }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem,3.5vw,4rem); font-weight: 400; line-height: 1.15; color: var(--white); }
+.section-title em { font-style: italic; color: var(--warm); }
+.warm-rule { width: 60px; height: 1px; background: var(--warm); margin: 28px 0; }
+
+/* ---- BUTTONS ---- */
+.btn-warm { padding: 16px 44px; background: var(--warm); color: var(--bg); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.3s; display: inline-block; text-decoration: none; }
+.btn-warm:hover { background: var(--warm2); }
+.btn-ghost-warm { padding: 16px 44px; background: transparent; color: var(--white); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.3s; display: inline-block; text-decoration: none; }
+.btn-ghost-warm:hover { border-color: var(--warm); color: var(--warm); }
+
+/* ---- FOOTER ---- */
+footer { background: #080705; padding: 80px 80px 40px; border-top: 1px solid rgba(212,169,106,0.08); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+.footer-logo-large { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--warm); margin-bottom: 16px; letter-spacing: 0.1em; }
+.footer-tagline { font-size: 0.8rem; color: var(--text); line-height: 1.9; max-width: 280px; }
+.footer-col-head { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm); margin-bottom: 24px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-links a { font-size: 0.8rem; color: var(--text); text-decoration: none; cursor: pointer; transition: color 0.3s; }
+.footer-links a:hover { color: var(--white); }
+.footer-bottom { padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text); }
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeUp { from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:translateY(0)} }
+.anim-1 { animation: fadeUp 0.7s ease both; }
+.anim-2 { animation: fadeUp 0.7s ease 0.1s both; }
+.anim-3 { animation: fadeUp 0.7s ease 0.2s both; }
+.anim-4 { animation: fadeUp 0.7s ease 0.3s both; }
+
+/* ================================================
+   OSSUA — Page-Specific Styles
+   ================================================ */
+
+/* ===== HOME ===== */
+.hero {
+  height: 100vh; position: relative;
+  display: flex; align-items: flex-end; overflow: hidden;
+}
+.hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=80') center/cover; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(13,11,8,1) 0%, rgba(13,11,8,0.6) 40%, rgba(0,0,0,0.3) 100%); }
+.hero-content { position: relative; z-index: 2; padding: 0 80px 100px; max-width: 700px; }
+.hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--warm); margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+.eyebrow-line { width: 40px; height: 1px; background: var(--warm); }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(3.5rem,6vw,7rem); font-weight: 400; line-height: 1.0; margin-bottom: 28px; }
+.hero-title em { font-style: italic; color: var(--warm); }
+.hero-desc { font-size: 1rem; color: rgba(255,255,255,0.65); line-height: 1.8; max-width: 500px; margin-bottom: 48px; }
+.hero-actions { display: flex; gap: 20px; }
+.hero-awards { position: absolute; right: 80px; bottom: 80px; z-index: 2; display: flex; flex-direction: column; gap: 20px; align-items: flex-end; }
+.award-item { display: flex; align-items: center; gap: 12px; background: rgba(13,11,8,0.8); border: 1px solid rgba(212,169,106,0.2); padding: 14px 20px; }
+.award-icon { font-size: 1.3rem; }
+.award-text { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm); }
+
+/* Philosophy Split */
+.philosophy { display: grid; grid-template-columns: 1fr 1fr; }
+.phil-img { position: relative; overflow: hidden; }
+.phil-img img { width: 100%; height: 100%; min-height: 600px; object-fit: cover; display: block; transition: transform 0.8s; }
+.phil-img:hover img { transform: scale(1.04); }
+.phil-text { background: var(--bg2); padding: 100px 80px; display: flex; flex-direction: column; justify-content: center; }
+.phil-text p { font-size: 0.9rem; color: var(--text); line-height: 2; margin-bottom: 24px; }
+.phil-signature { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--warm); margin-top: 20px; }
+.phil-chef-title { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); margin-top: 4px; }
+
+/* Gallery */
+.gallery-section { padding: 120px 0; }
+.gallery-header { padding: 0 80px 60px; }
+.gallery-grid { display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: 300px 300px; gap: 4px; }
+.gallery-item { overflow: hidden; cursor: pointer; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s, filter 0.4s; filter: brightness(0.85); }
+.gallery-item:hover img { transform: scale(1.08); filter: brightness(1); }
+.gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.gallery-item:nth-child(4) { grid-row: span 2; }
+
+/* ===== MENU PAGE ===== */
+.page-hero-inner {
+  padding: 160px 80px 80px;
+  background: linear-gradient(180deg, rgba(13,11,8,0) 0%, var(--bg) 100%), url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80') center/cover;
+  border-bottom: 1px solid rgba(212,169,106,0.08);
+}
+.menu-section { background: var(--bg2); padding: 80px 80px 120px; }
+.menu-tabs { display: flex; gap: 0; margin: 0 0 48px; border-bottom: 1px solid rgba(212,169,106,0.15); }
+.menu-tab { padding: 14px 32px; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; color: var(--text); border-bottom: 2px solid transparent; transition: all 0.3s; background: none; border-top: none; border-left: none; border-right: none; margin-bottom: -1px; font-family: 'DM Sans', sans-serif; }
+.menu-tab.active { color: var(--warm); border-bottom-color: var(--warm); }
+.menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+.menu-item { padding: 32px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; gap: 24px; align-items: flex-start; }
+.menu-item:nth-child(odd) { padding-right: 60px; border-right: 1px solid rgba(255,255,255,0.05); }
+.menu-item:nth-child(even) { padding-left: 60px; }
+.menu-num { font-family: 'Playfair Display', serif; font-size: 1rem; color: rgba(212,169,106,0.4); min-width: 32px; padding-top: 3px; }
+.menu-info { flex: 1; }
+.menu-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 500; margin-bottom: 6px; }
+.menu-desc { font-size: 0.78rem; color: var(--text); line-height: 1.7; }
+.menu-price { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--warm); white-space: nowrap; }
+.menu-cta { text-align: center; padding: 60px 80px; background: var(--bg); }
+.menu-cta p { font-size: 0.83rem; color: var(--text); margin-bottom: 36px; margin-top: 16px; }
+
+/* ===== EXPERIENCE PAGE ===== */
+.exp-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding: 100px 80px; align-items: center; }
+.exp-intro img { width: 100%; height: 500px; object-fit: cover; }
+.exp-text p { font-size: 0.88rem; color: var(--text); line-height: 2; margin-bottom: 16px; }
+.exp-highlights { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; padding: 0 80px 100px; }
+.exp-card { border: 1px solid rgba(212,169,106,0.1); padding: 40px 32px; text-align: center; transition: border-color 0.3s; }
+.exp-card:hover { border-color: rgba(212,169,106,0.35); }
+.exp-icon { font-size: 2.2rem; margin-bottom: 20px; }
+.exp-card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 12px; }
+.exp-card-text { font-size: 0.78rem; color: var(--text); line-height: 1.9; }
+
+/* ===== RESERVE PAGE ===== */
+.res-layout { display: grid; grid-template-columns: 1fr 1fr; margin-top: 80px; }
+.res-img { background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80') center/cover; min-height: 100vh; position: relative; }
+.res-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg3) 0%, transparent 50%); }
+.res-form { background: var(--bg3); padding: 100px 80px; display: flex; flex-direction: column; justify-content: center; min-height: 100vh; }
+.res-desc { font-size: 0.85rem; color: var(--text); line-height: 1.9; margin-bottom: 48px; margin-top: 16px; }
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.rform-group { margin-bottom: 20px; }
+.rform-group label { display: block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm); margin-bottom: 10px; }
+.rform-group input,
+.rform-group select,
+.rform-group textarea {
+  width: 100%; background: transparent; border: none;
+  border-bottom: 1px solid rgba(212,169,106,0.2);
+  color: var(--white); padding: 12px 0; font-size: 0.85rem;
+  font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.3s;
+}
+.rform-group input:focus, .rform-group select:focus { border-bottom-color: var(--warm); }
+.rform-group select option { background: var(--bg); }
+.rform-group textarea { height: 90px; resize: none; }
+.res-submit { padding: 18px 60px; background: var(--warm); color: var(--bg); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.3s; margin-top: 12px; }
+.res-submit:hover { background: var(--warm2); }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<nav id="mainNav">
+  <div class="nav-logo" data-page="home">OSSUA</div>
+  <ul class="nav-links">
+    <li><a href="#" data-page="home">Home</a></li>
+    <li><a href="#" data-page="menu">Menu</a></li>
+    <li><a href="#" data-page="experience">Experience</a></li>
+    <li><a href="#" data-page="reserve">Reserve</a></li>
+  </ul>
+  <button class="nav-reserve" data-page="reserve">Reserve a Table</button>
+</nav>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div id="home" class="page">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow anim-1"><span class="eyebrow-line"></span> Fine Dining · Est. 2009</div>
+      <h1 class="hero-title anim-2">Where <em>Flavour</em><br>Becomes<br>Art</h1>
+      <p class="hero-desc anim-3">An intimate journey through modern European cuisine. Crafted with the finest seasonal ingredients, composed with passion, served with grace.</p>
+      <div class="hero-actions anim-4">
+        <a class="btn-warm" href="#" data-page="reserve">Reserve Your Table</a>
+        <a class="btn-ghost-warm" href="#" data-page="menu">Explore the Menu</a>
+      </div>
+    </div>
+    <div class="hero-awards">
+      <div class="award-item"><span class="award-icon">⭐</span><div class="award-text">Michelin Star 2024</div></div>
+      <div class="award-item"><span class="award-icon">🏆</span><div class="award-text">World's Best 50</div></div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <div class="philosophy">
+    <div class="phil-img"><img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=900&q=80" alt="Chef at work" /></div>
+    <div class="phil-text">
+      <div class="section-eyebrow"><span class="eyebrow-line"></span> Our Philosophy</div>
+      <h2 class="section-title">Flavour is the<br><em>true language</em><br>of memory</h2>
+      <div class="warm-rule"></div>
+      <p>At OSSUA, every dish is a conversation between season and place. We source our ingredients exclusively from local artisan producers — the herbs from our rooftop garden, the fish from the morning boats of Sestri, the truffle from a farmer whose family has worked the same forest for six generations.</p>
+      <p>Chef Marco Delacroix leads our kitchen with obsessive precision and boundless creativity. His tasting menus evolve with every harvest, telling the story of the land and sea through textures, temperatures, and flavours you will carry with you long after the meal is over.</p>
+      <div class="phil-signature">Marco Delacroix</div>
+      <div class="phil-chef-title">Head Chef & Founder, OSSUA</div>
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <section class="gallery-section">
+    <div class="gallery-header">
+      <div class="section-eyebrow"><span class="eyebrow-line"></span> Gallery</div>
+      <h2 class="section-title">A feast for the <em>eyes</em></h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Fine Dining" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&q=80" alt="Dish" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80" alt="Restaurant" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt="Interior" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=600&q=80" alt="Chef" /></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80" alt="Plate" /></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div><div class="footer-logo-large">OSSUA</div><p class="footer-tagline">A Michelin-starred fine dining experience in the heart of the city. Open Tuesday – Sunday, 6PM – 11PM.</p></div>
+      <div><div class="footer-col-head">Visit</div><ul class="footer-links"><li><a data-page="reserve">Reservations</a></li><li><a>Private Dining</a></li><li><a>Gift Vouchers</a></li><li><a>Directions</a></li></ul></div>
+      <div><div class="footer-col-head">Explore</div><ul class="footer-links"><li><a data-page="menu">Menus</a></li><li><a data-page="experience">Experience</a></li><li><a>Wine List</a></li><li><a>Press</a></li></ul></div>
+      <div><div class="footer-col-head">Contact</div><ul class="footer-links"><li><a>+44 20 7946 0958</a></li><li><a>hello@ossua.co</a></li><li><a>12 Belgravia Mews, London</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 OSSUA Restaurant. All Rights Reserved.</span><span>Privacy Policy · Allergen Info</span></div>
+  </footer>
+</div>
+
+<!-- ═══════════════ MENU PAGE ═══════════════ -->
+<div id="menu" class="page">
+  <div class="page-hero-inner">
+    <div class="section-eyebrow"><span class="eyebrow-line"></span> Our Menus</div>
+    <h1 class="section-title" style="font-size:clamp(2.5rem,4vw,4.5rem)">Seasonal <em>Tasting</em><br>Experiences</h1>
+  </div>
+  <section class="menu-section">
+    <div class="menu-tabs">
+      <button class="menu-tab active">Tasting Menu</button>
+      <button class="menu-tab">À La Carte</button>
+      <button class="menu-tab">Wine Pairing</button>
+      <button class="menu-tab">Private Dining</button>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-num">01</div><div class="menu-info"><div class="menu-name">Oscietra Caviar & Celeriac</div><div class="menu-desc">Cold-smoked celeriac velouté, oscietra caviar, crème fraîche, dill oil, brioche tuile</div></div><div class="menu-price">£38</div></div>
+      <div class="menu-item"><div class="menu-num">02</div><div class="menu-info"><div class="menu-name">Langoustine Bisque</div><div class="menu-desc">Cornish langoustine, saffron emulsion, sea herbs, fennel crisps, champagne velouté</div></div><div class="menu-price">£44</div></div>
+      <div class="menu-item"><div class="menu-num">03</div><div class="menu-info"><div class="menu-name">Heritage Tomato & Burrata</div><div class="menu-desc">Rooftop garden heritage tomatoes, buffalo burrata, aged balsamic, basil oil, wild flower</div></div><div class="menu-price">£28</div></div>
+      <div class="menu-item"><div class="menu-num">04</div><div class="menu-info"><div class="menu-name">Duck Liver Parfait</div><div class="menu-desc">Périgord foie gras parfait, brioche toast, fig compote, Sauternes jelly, micro herbs</div></div><div class="menu-price">£34</div></div>
+      <div class="menu-item"><div class="menu-num">05</div><div class="menu-info"><div class="menu-name">Dry-Aged Beef Tenderloin</div><div class="menu-desc">55-day dry-aged fillet, truffle pomme purée, wild mushroom, bone marrow jus, watercress</div></div><div class="menu-price">£68</div></div>
+      <div class="menu-item"><div class="menu-num">06</div><div class="menu-info"><div class="menu-name">Dover Sole Meunière</div><div class="menu-desc">Whole Dover sole, brown butter, capers, lemon, asparagus, jersey royals, sea herbs</div></div><div class="menu-price">£56</div></div>
+      <div class="menu-item"><div class="menu-num">07</div><div class="menu-info"><div class="menu-name">Rack of Lamb Provençal</div><div class="menu-desc">French rack, herbed crust, ratatouille, olive tapenade, rosemary jus, pommes Anna</div></div><div class="menu-price">£58</div></div>
+      <div class="menu-item"><div class="menu-num">08</div><div class="menu-info"><div class="menu-name">Dark Chocolate Soufflé</div><div class="menu-desc">Valrhona 70% soufflé, Tahitian vanilla ice cream, praline, sea salt caramel</div></div><div class="menu-price">£22</div></div>
+    </div>
+  </section>
+  <div class="menu-cta">
+    <div class="section-eyebrow" style="justify-content:center"><span class="eyebrow-line"></span> 8-Course Tasting Menu <span class="eyebrow-line"></span></div>
+    <h2 class="section-title" style="margin:20px 0 16px;text-align:center">£195 per person</h2>
+    <p>Wine pairing available — £95 per person · Sommelier-curated selection of 6 wines</p>
+    <a class="btn-warm" href="#" data-page="reserve">Reserve Your Experience</a>
+  </div>
+  <footer><div class="footer-bottom"><span>© 2025 OSSUA Restaurant.</span><a href="#" data-page="home" style="color:var(--text);text-decoration:none">← Back to Home</a></div></footer>
+</div>
+
+<!-- ═══════════════ EXPERIENCE PAGE ═══════════════ -->
+<div id="experience" class="page">
+  <div class="page-hero-inner">
+    <div class="section-eyebrow"><span class="eyebrow-line"></span> The Experience</div>
+    <h1 class="section-title" style="font-size:clamp(2.5rem,4vw,4.5rem)">More than a meal.<br><em>A memory.</em></h1>
+  </div>
+  <div class="exp-intro">
+    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80" alt="Restaurant Interior" />
+    <div class="exp-text">
+      <div class="section-eyebrow"><span class="eyebrow-line"></span> The Setting</div>
+      <h2 class="section-title">Designed for <em>intimacy</em></h2>
+      <div class="warm-rule"></div>
+      <p>Our 36-seat dining room is an exercise in restraint. Warm candlelight, hand-woven linens, handmade ceramic tableware crafted exclusively for OSSUA by artisan potters in Oaxaca. The room speaks softly so the food can speak loudly.</p>
+      <p>Every table at OSSUA offers complete privacy. We seat no more than eight tables per service, ensuring that each guest receives the full attention of our team — from the moment they arrive to the moment they leave.</p>
+      <p>We ask that you arrive 15 minutes before your booking to enjoy a welcome aperitif in our lounge, where our sommelier will guide you through the evening's wine programme.</p>
+    </div>
+  </div>
+  <div class="exp-highlights">
+    <div class="exp-card"><div class="exp-icon">🍷</div><div class="exp-card-title">Sommelier-Guided Wine</div><div class="exp-card-text">Our Master Sommelier curates wine pairings from a cellar of 1,200 labels, with a focus on small-production and natural wines from across Europe and beyond.</div></div>
+    <div class="exp-card"><div class="exp-icon">🌿</div><div class="exp-card-title">Rooftop Garden</div><div class="exp-card-text">Many of the herbs, edible flowers, and microgreens on your plate are grown on our rooftop garden, just meters above the dining room — harvested hours before service.</div></div>
+    <div class="exp-card"><div class="exp-icon">🎭</div><div class="exp-card-title">Private Dining Room</div><div class="exp-card-text">Host birthdays, anniversaries, or corporate dinners in our private dining room. A bespoke menu crafted personally by Chef Marco.</div></div>
+  </div>
+  <footer><div class="footer-bottom"><span>© 2025 OSSUA Restaurant.</span><a href="#" data-page="home" style="color:var(--text);text-decoration:none">← Back to Home</a></div></footer>
+</div>
+
+<!-- ═══════════════ RESERVE PAGE ═══════════════ -->
+<div id="reserve" class="page">
+  <div class="res-layout">
+    <div class="res-img"></div>
+    <div class="res-form">
+      <div class="section-eyebrow"><span class="eyebrow-line"></span> Reservations</div>
+      <h2 class="section-title">Reserve Your <em>Table</em></h2>
+      <p class="res-desc">We accept reservations up to 60 days in advance. For parties of 7 or more, or private dining enquiries, please contact us at <span style="color:var(--warm)">hello@ossua.co</span></p>
+      <form id="reservationForm">
+        <div class="form-grid-2">
+          <div class="rform-group"><label>First Name</label><input type="text" placeholder="James" required></div>
+          <div class="rform-group"><label>Last Name</label><input type="text" placeholder="Wentworth" required></div>
+        </div>
+        <div class="rform-group"><label>Email Address</label><input type="email" placeholder="james@example.com" required></div>
+        <div class="rform-group"><label>Phone Number</label><input type="tel" placeholder="+44 7700 900000"></div>
+        <div class="form-grid-2">
+          <div class="rform-group"><label>Date</label><input type="date" required></div>
+          <div class="rform-group"><label>Time</label>
+            <select required>
+              <option value="">Select time</option>
+              <option>18:00</option><option>18:30</option><option>19:00</option>
+              <option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="rform-group"><label>Guests</label>
+            <select>
+              <option>1 Guest</option><option>2 Guests</option><option>3 Guests</option>
+              <option>4 Guests</option><option>5 Guests</option><option>6 Guests</option>
+            </select>
+          </div>
+          <div class="rform-group"><label>Occasion</label>
+            <select>
+              <option>Dinner</option><option>Birthday</option><option>Anniversary</option>
+              <option>Business</option><option>Proposal</option>
+            </select>
+          </div>
+        </div>
+        <div class="rform-group"><label>Special Requests / Dietary Requirements</label><textarea placeholder="Allergies, dietary requirements, special occasions..."></textarea></div>
+        <button type="submit" class="res-submit">Confirm Reservation ✦</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================================================
+   OSSUA — main.js
+   ================================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ── PAGE NAVIGATION ──────────────────────────────
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelectorAll('[data-page]').forEach(el => {
+      el.classList.toggle('active', el.dataset.page === id);
+    });
+  }
+
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      showPage(el.dataset.page);
+    });
+  });
+
+  // ── STICKY NAV ───────────────────────────────────
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── MENU TABS ─────────────────────────────────────
+  document.querySelectorAll('.menu-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      tab.closest('.menu-tabs').querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // ── RESERVATION FORM ─────────────────────────────
+  const resForm = document.getElementById('reservationForm');
+  if (resForm) {
+    resForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = resForm.querySelector('.res-submit');
+      btn.textContent = '✦ Reservation Confirmed!';
+      btn.style.background = '#4CAF50';
+      setTimeout(() => {
+        btn.textContent = 'Confirm Reservation ✦';
+        btn.style.background = '#D4A96A';
+        resForm.reset();
+      }, 4000);
+    });
+  }
+
+  // ── INIT ─────────────────────────────────────────
+  showPage('home');
+});
+
+</script>
+</body>
+</html>
